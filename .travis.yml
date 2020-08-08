@@ -20,6 +20,7 @@ branches:
 
 script:
   - "yarn test:coverage"
+  - sonar-scanner
 
 cache: yarn
 
