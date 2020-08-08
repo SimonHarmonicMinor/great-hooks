@@ -19,7 +19,7 @@ branches:
     - releases
 
 script:
-  - sonar-scanner
+  - "yarn test:coverage"
 
 cache: yarn
 
