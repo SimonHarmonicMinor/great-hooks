@@ -1,7 +1,7 @@
-import { doNothing } from '../index'
+import { returnZero } from '../index'
 
 it('fake test', () => {
-  expect(doNothing()).toBeUndefined()
+  expect(returnZero()).toBe(0)
 })
 
 export {}

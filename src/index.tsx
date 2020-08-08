@@ -1,3 +1,5 @@
-function doNothing() {}
+function returnZero(): number {
+  return 0
+}
 
-export { doNothing }
+export { returnZero }
