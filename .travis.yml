@@ -16,7 +16,6 @@ before_install:
 branches:
   only:
     - master
-    - releases
 
 script:
   - "yarn test:coverage"
@@ -29,4 +28,4 @@ deploy:
     skip_cleanup: true
     script: bash ./deploy.sh
     on:
-      branch: releases
+      branch: master
