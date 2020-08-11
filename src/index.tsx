@@ -1,3 +1,3 @@
-function doNothing() {}
+import { useAutoUpdateRef } from './useAutoUpdateRef'
 
-export { doNothing }
+export { useAutoUpdateRef }
