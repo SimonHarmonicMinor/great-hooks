@@ -1,5 +1,3 @@
-function returnZero(): number {
-  return 0
-}
+import { useAutoUpdateRef } from './useAutoUpdateRef'
 
-export { returnZero }
+export { useAutoUpdateRef }
