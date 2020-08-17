@@ -1,46 +1,54 @@
 import { useEffect, useRef } from 'react'
-import type { MutableRefObject } from 'react'
 
-interface UseIntervalParams {
-  callback: (() => Promise<any>) | (() => any)
+type UseIntervalParams = {
+  callback: () => any
   interval: number
-  delay: number | undefined | null
+  delay?: number
 }
 
+/**
+ * Invokes the callback in a loop with a given interval.<br>
+ *
+ * @param callback The function that has to be called.<br>
+ *
+ * @param interval The interval in milliseconds.<br>
+ *
+ * @param delay The optional initial delay in milliseconds.
+ * If it has been set, then the first invocation shall be delayed.<br>
+ *
+ * @throws RangeError if <code>interval</code> or <code>delay</code> is less than 0
+ */
 function useInterval({ callback, interval, delay }: UseIntervalParams) {
   if (interval < 0 || (delay ?? 0) < 0) {
     throw new RangeError(
       `"interval" and "delay" parameters should be non-negative. Given: [interval=${interval}, delay=${delay}]`
     )
   }
-  // @ts-ignore
-  const savedTimerId: MutableRefObject<NodeJS.Timeout> = useRef()
+  const savedTimerId = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
-    const loop = () => {
-      const res = callback()
-      const nextIteration = () => {
-        savedTimerId.current = setTimeout(loop, interval)
-      }
-      if (res instanceof Promise) {
-        res.then(nextIteration)
-      } else {
-        nextIteration()
-      }
-    }
     let delayedTimerId: NodeJS.Timeout
     if (!delay) {
-      loop()
+      callInLoop()
     } else {
-      delayedTimerId = setTimeout(loop, delay)
+      delayedTimerId = setTimeout(callInLoop, delay)
     }
     return () => {
+      // @ts-ignore
       clearTimeout(savedTimerId.current)
       if (delayedTimerId) {
         clearTimeout(delayedTimerId)
       }
     }
   }, [callback, interval, delay])
+
+  function callInLoop() {
+    callback()
+    const nextIteration = () => {
+      savedTimerId.current = setTimeout(callInLoop, interval)
+    }
+    nextIteration()
+  }
 }
 
 export { useInterval }
