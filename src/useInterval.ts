@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useAutoUpdateRef } from './useAutoUpdateRef'
 
 type UseIntervalParams = {
   callback: () => any
@@ -24,6 +25,7 @@ function useInterval({ callback, interval, delay }: UseIntervalParams) {
       `"interval" and "delay" parameters should be non-negative. Given: [interval=${interval}, delay=${delay}]`
     )
   }
+  const savedCallback = useAutoUpdateRef<() => any>(callback)
   const savedTimerId = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
@@ -40,10 +42,10 @@ function useInterval({ callback, interval, delay }: UseIntervalParams) {
         clearTimeout(delayedTimerId)
       }
     }
-  }, [callback, interval, delay])
+  }, [interval, delay])
 
   function callInLoop() {
-    callback()
+    savedCallback.current()
     const nextIteration = () => {
       savedTimerId.current = setTimeout(callInLoop, interval)
     }
