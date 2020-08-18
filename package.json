@@ -1,6 +1,6 @@
 {
   "name": "@kirekov/great-hooks",
-  "version": "1.1.0",
+  "version": "0.0.0",
   "description": "A bunch of useful react-hooks to make your components less verbose and cleaner",
   "author": "SimonHarmonicMinor",
   "license": "MIT",
@@ -28,8 +28,7 @@
     "test:lint": "eslint './src/**/*.{ts,tsx}'",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:unit-coverage": "cross-env CI=1 react-scripts test --env=jsdom --coverage --watchAll=false",
-    "test:watch": "react-scripts test --env=jsdom",
-    "release": "semantic-release"
+    "test:watch": "react-scripts test --env=jsdom"
   },
   "peerDependencies": {
     "react": "^16.8.0"
@@ -66,7 +65,6 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
     "react-test-renderer": "^16.13.1",
-    "semantic-release": "^17.1.1",
     "typescript": "^3.7.5"
   },
   "files": [
