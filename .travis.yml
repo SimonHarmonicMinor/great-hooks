@@ -5,20 +5,22 @@ node_js:
 
 addons:
   sonarcloud:
-    organization: "simonharmonicminor"
+    organization: simonharmonicminor
     token:
-      secure: "Jwphnt2Toy140xF96+08bBsSSqRgASlBYDB7zFoZEVtv1m5EK/ZeCNxoLGBo+LP/XRmdBKWCb9MYpW0FGwwLDqbyOtBC3zy2Y1UR9bK0i8H4A7F/FyZf0Vl7Lep59ywHyyvyiU37fKNi24H+mJmzWCTLAnFcFg9gCeGCBdsWYynqDacQ8HWs0T6DBDY6UM4w9cVUUfZIr31myO4vjuOqN3PprfFBqlat5UJ4rzyiG65zjtyfSWAFyqAzq0kX7t9MdQeC2l6SCdJW9UnJDaTxgDWaq6WtNbNGKEGaiHdIHhAP0DZ1yLuE+g893v9yNYwSlwatYqBgtPbvlvNwiDlZF8a4s9qNKp+uBF7DXGOhoKLBC1AT6s3Y947oFy3dXuQEs3u6jZrrwd56FueTEBvy5e2tP0jrF0wKQJhSl2qVCziZL9diHv/to6YUjSh36nlLzazLbs6+qYpGwcC/iTlI9UKLiV0wh4WlscDRsO7kCPF0E8Kn/tcEjm7bjVHQ1K0Zv+7XWSNXJSvSsRbRnCWOfaPWjAJUSfv/fuwC9MmCaTo+aJeur8j+ghsnm93jy11OZF/hp3zBfNqxks9OAGZsgybKVI1g+4JG8QFB+bFHXuSfuhX8/YwjQSy2Z8m2xDMwud20zA2ySGz144/HoMjfEOsgqxEUwJdM0GSXivhB6HE="
+      secure: Jwphnt2Toy140xF96+08bBsSSqRgASlBYDB7zFoZEVtv1m5EK/ZeCNxoLGBo+LP/XRmdBKWCb9MYpW0FGwwLDqbyOtBC3zy2Y1UR9bK0i8H4A7F/FyZf0Vl7Lep59ywHyyvyiU37fKNi24H+mJmzWCTLAnFcFg9gCeGCBdsWYynqDacQ8HWs0T6DBDY6UM4w9cVUUfZIr31myO4vjuOqN3PprfFBqlat5UJ4rzyiG65zjtyfSWAFyqAzq0kX7t9MdQeC2l6SCdJW9UnJDaTxgDWaq6WtNbNGKEGaiHdIHhAP0DZ1yLuE+g893v9yNYwSlwatYqBgtPbvlvNwiDlZF8a4s9qNKp+uBF7DXGOhoKLBC1AT6s3Y947oFy3dXuQEs3u6jZrrwd56FueTEBvy5e2tP0jrF0wKQJhSl2qVCziZL9diHv/to6YUjSh36nlLzazLbs6+qYpGwcC/iTlI9UKLiV0wh4WlscDRsO7kCPF0E8Kn/tcEjm7bjVHQ1K0Zv+7XWSNXJSvSsRbRnCWOfaPWjAJUSfv/fuwC9MmCaTo+aJeur8j+ghsnm93jy11OZF/hp3zBfNqxks9OAGZsgybKVI1g+4JG8QFB+bFHXuSfuhX8/YwjQSy2Z8m2xDMwud20zA2ySGz144/HoMjfEOsgqxEUwJdM0GSXivhB6HE=
 
 before_install:
+  - openssl aes-256-cbc -K $encrypted_12453d06e6e3_key -iv $encrypted_12453d06e6e3_iv -in .npmrc.enc -out .npmrc -d
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.4
   - export PATH="$HOME/.yarn/bin:$PATH"
 
 branches:
   only:
     - master
+    - releases
 
 script:
-  - "yarn test:coverage"
+  - yarn test:coverage
   - sonar-scanner
 
 cache: yarn
@@ -28,4 +30,4 @@ deploy:
     skip_cleanup: true
     script: bash ./deploy.sh
     on:
-      branch: master
+      branch: releases
