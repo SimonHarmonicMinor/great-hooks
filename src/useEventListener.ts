@@ -1,28 +1,37 @@
 import { useAutoUpdateRef } from './useAutoUpdateRef'
 import { useEffect } from 'react'
 
-type UseEventListenerParams = {
-  eventName: string
-  onEventTriggered: (event: Event) => any
-  element: EventTarget
-}
-
 function useEventListener({
   eventName,
   onEventTriggered,
-  element
+  eventTarget
 }: UseEventListenerParams) {
   const savedEventCallback = useAutoUpdateRef<(event: Event) => any>(
     onEventTriggered
   )
   useEffect(() => {
     const eventListener = (event: Event) => savedEventCallback.current(event)
-    element.addEventListener(eventName, eventListener)
+    eventTarget.addEventListener(eventName, eventListener)
     return () => {
-      element.removeEventListener(eventName, eventListener)
+      eventTarget.removeEventListener(eventName, eventListener)
     }
-  }, [eventName, element])
+  }, [eventName, eventTarget])
+}
+
+interface UseEventListenerParams {
+  eventName: string
+  onEventTriggered: EventListener
+  eventTarget: EventTarget
+}
+
+interface EventListener {
+  (event: Event): any
+}
+
+interface EventTarget {
+  addEventListener: (type: string, eventListener: EventListener) => any
+  removeEventListener: (type: string, eventListener: EventListener) => any
 }
 
 export { useEventListener }
-export type { UseEventListenerParams }
+export type { UseEventListenerParams, EventListener, EventTarget }
