@@ -8,6 +8,7 @@
 * [Status](#status)
 * [Usage](#usage)
   * [useAutoUpdateRef](#useautoupdateref)
+  * [useInterval](#useinterval)
 
 ## Quick Start
 Install with `npm`
@@ -28,11 +29,13 @@ yarn add @kirekov/great-hooks
 
 ## Usage
 
+> :heavy_check_mark: The library has been written in TypeScript. So, it supports types checking.
+
 ### useAutoUpdateRef
 How many times have you written this?
-```js
+```typescript
 function MyComponent(props) {
-  const ref = useRef(props.value);
+  const ref = useRef<string>(props.value);
 
   useEffect(() => {
     ref.current = props.value;
@@ -41,11 +44,30 @@ function MyComponent(props) {
 }
 ```
 Forget about it. That's all you need now.
-```js
+```typescript
 import { useAutoUpdateRef } from '@kirekov/great-hooks';
 
 function MyComponent(props) {
-  const ref = useAutoUpdateRef(props.value);
+  const ref = useAutoUpdateRef<string>(props.value);
   ...
 }
 ```
+
+### useInterval
+If you need to start an interval inside your component, `useInterval` might be handy.
+
+```typescript
+function EndlessTimer(props) {
+  ...
+  const onUpdate = () => { ... };
+  useInterval({ callback: onUpdate, interval: 5000 })
+}
+...
+type UseIntervalParams = {
+  callback: () => any
+  interval: number
+  delay?: number
+}
+```
+
+`delay` attribute defines the pause time before the first `callback` invocation.
