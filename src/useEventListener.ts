@@ -1,0 +1,3 @@
+function useEventListener() {}
+
+export { useEventListener }
