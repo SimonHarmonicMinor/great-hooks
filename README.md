@@ -58,6 +58,8 @@ function MyComponent(props) {
 If you need to start an interval inside your component, `useInterval` might be handy.
 
 ```typescript
+import { useInterval } from '@kirekov/great-hooks';
+
 function EndlessTimer(props) {
   ...
   const onUpdate = () => { ... };
@@ -92,6 +94,8 @@ function CustomEventComponent(props) {
 
 Thankfully `great-hooks` gives much simpler solution.
 ```typescript
+import { useEventListener } from '@kirekov/great-hooks';
+
 function CustomEventComponent(props) {
   ...
   useEventListener({ eventName: 'click', onEventTriggered: onCustomClick, eventTarget: document });
