@@ -1,0 +1,19 @@
+name: Pull-request rc-* -> master
+on:
+  push:
+    branches:
+      - 'rc-**'
+jobs:
+  promote-release-canditate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}/promotion
+          title: Automatic pull request from ${{ github.ref }} to master
+          labels: automerge
