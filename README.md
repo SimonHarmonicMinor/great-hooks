@@ -9,6 +9,7 @@
 * [Usage](#usage)
   * [useAutoUpdateRef](#useautoupdateref)
   * [useInterval](#useinterval)
+  * [useEventListener](#useeventlistener)
 
 ## Quick Start
 Install with `npm`
@@ -71,3 +72,28 @@ type UseIntervalParams = {
 ```
 
 `delay` attribute defines the pause time before the first `callback` invocation.
+
+
+### useEventListener
+Although `React` provides us with convenient API to bind event listeners to the DOM,
+sometimes it's required to come up with custom solutions. For example, we can do it like this.
+
+```typescript
+function CustomEventComponent(props) {
+  ...
+  useEffect(() => {
+    document.addEventListener('click', onCustomClick);
+    return () => {
+      document.removeEventListener('click', onCustomClick);
+    };
+  }, [])
+}
+```
+
+Thankfully `great-hooks` gives much simpler solution.
+```typescript
+function CustomEventComponent(props) {
+  ...
+  useEventListener({ eventName: 'click', onEventTriggered: onCustomClick, eventTarget: document });
+}
+```
