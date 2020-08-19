@@ -6,9 +6,7 @@ function useEventListener({
   onEventTriggered,
   eventTarget
 }: UseEventListenerParams) {
-  const savedEventCallback = useAutoUpdateRef<(event: Event) => any>(
-    onEventTriggered
-  )
+  const savedEventCallback = useAutoUpdateRef<EventListener>(onEventTriggered)
   useEffect(() => {
     const eventListener = (event: Event) => savedEventCallback.current(event)
     eventTarget.addEventListener(eventName, eventListener)
