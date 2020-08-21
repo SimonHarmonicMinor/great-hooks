@@ -2,10 +2,10 @@ import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 
 function useStateWithCallback<T>(initialState: T): [T, SetState<T>] {
   const [state, setState] = useState(initialState)
-  const callbackRef = useRef<SetStateCallback<T> | null>(null)
+  const callbackRef = useRef<SetStateCallback<T> | undefined>(undefined)
 
   const setStateWithCallback: SetState<T> = useCallback(
-    (setStateAction: SetStateAction<T>, callback: SetStateCallback<T>) => {
+    (setStateAction: SetStateAction<T>, callback?: SetStateCallback<T>) => {
       callbackRef.current = callback
       setState(setStateAction)
     },
@@ -15,7 +15,7 @@ function useStateWithCallback<T>(initialState: T): [T, SetState<T>] {
   useEffect(() => {
     if (callbackRef.current) {
       callbackRef.current(state)
-      callbackRef.current = null
+      callbackRef.current = undefined
     }
   }, [state])
 
@@ -23,7 +23,7 @@ function useStateWithCallback<T>(initialState: T): [T, SetState<T>] {
 }
 
 type SetState<T> = {
-  (setStateAction: SetStateAction<T>, callback: SetStateCallback<T>): void
+  (setStateAction: SetStateAction<T>, callback?: SetStateCallback<T>): void
 }
 
 type SetStateCallback<T> = {
