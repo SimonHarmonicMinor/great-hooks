@@ -101,3 +101,25 @@ function CustomEventComponent(props) {
   useEventListener({ eventName: 'click', onEventTriggered: onCustomClick, eventTarget: document });
 }
 ```
+
+### useStateWithCallback
+Have you faced with a problem when you need to execute something exactly after the new state has been saved?
+It can be easily done with `setState` approach.
+
+```javascript
+this.setState({ greetings: 'Hi there' }, () => { ... })
+```
+So, what about hooks API? `great-hooks` provides an easy way to do it.
+
+```typescript
+import { useStateWithCallback } from '@kirekov/great-hooks';
+
+function MyComponent(props) {
+  const [counter, setCounter] = useStateWithCallback<number>(0);
+  function increment() {
+    setCounter(prevCounter => prevCounter + 1, newCounterValue => {
+      console.log('newCounterValue', newCounterValue);
+    })
+  }
+}
+```
