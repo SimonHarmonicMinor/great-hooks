@@ -1,10 +1,12 @@
 import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 
-function useStateWithCallback<T>(initialState: T): [T, SetState<T>] {
+export function useStateWithCallback<T>(
+  initialState: T
+): [T, SetStateWithCallback<T>] {
   const [state, setState] = useState(initialState)
   const callbackRef = useRef<SetStateCallback<T> | undefined>(undefined)
 
-  const setStateWithCallback: SetState<T> = useCallback(
+  const setStateWithCallback: SetStateWithCallback<T> = useCallback(
     (setStateAction: SetStateAction<T>, callback?: SetStateCallback<T>) => {
       callbackRef.current = callback
       setState(setStateAction)
@@ -22,12 +24,10 @@ function useStateWithCallback<T>(initialState: T): [T, SetState<T>] {
   return [state, setStateWithCallback]
 }
 
-type SetState<T> = {
+export type SetStateWithCallback<T> = {
   (setStateAction: SetStateAction<T>, callback?: SetStateCallback<T>): void
 }
 
-type SetStateCallback<T> = {
+export type SetStateCallback<T> = {
   (state: T): any
 }
-
-export { useStateWithCallback }
