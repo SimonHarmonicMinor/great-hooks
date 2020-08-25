@@ -10,6 +10,8 @@
   * [useAutoUpdateRef](#useautoupdateref)
   * [useInterval](#useinterval)
   * [useEventListener](#useeventlistener)
+  * [useStateWithCallback](#usestatewithcallback)
+  * [useStateWithPromise](#usestatewithpromise)
 
 ## Quick Start
 Install with `npm`
@@ -120,6 +122,23 @@ function MyComponent(props) {
     setCounter(prevCounter => prevCounter + 1, newCounterValue => {
       console.log('newCounterValue', newCounterValue);
     })
+  }
+}
+```
+
+### useStateWithPromise
+Additionally, the lib provides Promise-like api to handle state updates.
+
+```typescript
+import { useStateWithPromise } from '@kirekov/great-hooks';
+
+function MyComponent(props) {
+  const [counter, setCounter] = useStateWithPromise<number>(0);
+  function increment() {
+    setCounter(prevCounter => prevCounter + 1)
+      .then(newCounterValue => {
+        console.log('newCounterValue', newCounterValue);
+      })
   }
 }
 ```
