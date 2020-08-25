@@ -30,4 +30,18 @@ describe("Test scenarios for 'useStateWithCallback' hook", () => {
     expect(mockFn).toHaveBeenNthCalledWith(1, 'before')
     expect(mockFn).toHaveBeenNthCalledWith(2, 'after')
   })
+
+  it("Re-renders does not trigger 'setStateWithCallback' rerender", () => {
+    const initialState: number = 1
+    const { result, rerender } = renderHook(() =>
+      useStateWithCallback(initialState)
+    )
+    const [state, setStateWithCallback] = result.current
+    rerender()
+    const [newState, newSetStateWithCallback] = result.current
+
+    expect(state).toEqual(1)
+    expect(newState).toEqual(1)
+    expect(setStateWithCallback).toStrictEqual(newSetStateWithCallback)
+  })
 })
