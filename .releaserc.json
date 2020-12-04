@@ -6,7 +6,7 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "yarn publish --access public --new-version \"${nextRelease.version}\"",
+        "publishCmd": "yarn publish --access public --new-version \"${nextRelease.version}\" --no-git-tag-version",
         "successCmd": "node ./setVersion.js ${nextRelease.version}"
       }
     ]
