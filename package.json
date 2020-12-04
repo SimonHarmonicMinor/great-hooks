@@ -1,6 +1,6 @@
 {
   "name": "@kirekov/great-hooks",
-  "version": "0.0.0",
+  "version": "1.6.0",
   "description": "A bunch of useful react-hooks to make your components less verbose and cleaner",
   "author": "SimonHarmonicMinor",
   "license": "MIT",
