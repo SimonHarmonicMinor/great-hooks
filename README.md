@@ -69,7 +69,7 @@ function EndlessTimer(props) {
   useInterval({ callback: onUpdate, interval: 5000 })
 }
 ...
-type UseIntervalParams = {
+interface UseIntervalParams {
   callback: () => any
   interval: number
   delay?: number
@@ -77,6 +77,17 @@ type UseIntervalParams = {
 ```
 
 `delay` attribute defines the pause time before the first `callback` invocation.
+
+If you need to start the interval again, just call the `restart` function.
+
+```typescript
+const restart = useInterval({ callback: onUpdate, interval: 5000 })
+const onRestart = () => {
+    restart().then(() => {
+        console.log('The interval has been restarted!')
+    })
+}
+```
 
 
 ### useEventListener
