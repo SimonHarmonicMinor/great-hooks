@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks'
 import { useInterval } from '../useInterval'
 
 describe("Test scenarios for 'useInterval' hook", () => {
@@ -33,5 +33,23 @@ describe("Test scenarios for 'useInterval' hook", () => {
     renderHook(() => useInterval({ callback, interval, delay }))
     expect(callback).toHaveBeenCalledTimes(0)
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), delay)
+  })
+
+  it('The returning function should restart the interval', () => {
+    jest.useFakeTimers()
+    const callback = jest.fn()
+    const interval = 200000
+    const { result } = renderHook(() => useInterval({ callback, interval }))
+    act(() => {
+      result.current().then(() => {
+        act(() => {
+          result.current().then(() => {
+            act(() => {
+              expect(callback).toHaveBeenCalledTimes(3)
+            })
+          })
+        })
+      })
+    })
   })
 })
