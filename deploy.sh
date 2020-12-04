@@ -7,4 +7,4 @@ PACKAGE_VERSION=$(cat package.json \
   | sed 's/[",]//g' \
   | tr -d '[[:space:]]')
 
-yarn publish --access public --new-version "$PACKAGE_VERSION"
+yarn run semantic-release
