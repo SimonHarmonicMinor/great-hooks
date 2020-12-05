@@ -13,7 +13,7 @@ function useEventListener({
     return () => {
       eventTarget.removeEventListener(eventName, eventListener)
     }
-  }, [eventName, eventTarget])
+  }, [eventName, eventTarget, savedEventCallback])
 }
 
 interface UseEventListenerParams {
