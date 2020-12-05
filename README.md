@@ -2,8 +2,6 @@
 
 ## A bunch of useful react-hooks to make your components less verbose and cleaner
 
-> :point_up: `master` branch represents the latest snapshot version. If you want to check the particular versions, check `releases` branch.
-
 ## Table of Contents
 * [Quick Start](#quick-start)
 * [Status](#status)
