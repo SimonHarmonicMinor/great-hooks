@@ -7,6 +7,7 @@
 * [Status](#status)
 * [Usage](#usage)
   * [useAutoUpdateRef](#useautoupdateref)
+  * [useEffectOnce](#useeffectonce)
   * [useInterval](#useinterval)
   * [useEventListener](#useeventlistener)
   * [useStateWithCallback](#usestatewithcallback)
@@ -52,6 +53,19 @@ import { useAutoUpdateRef } from '@kirekov/great-hooks';
 function MyComponent(props) {
   const ref = useAutoUpdateRef<string>(props.value);
   ...
+}
+```
+
+### useEffectOnce
+If you need to invoke `useEffect` only once, you can use that hook.
+
+```typescript
+import { useEffectOnce } from "@kirekov/great-hooks";
+
+function MyComponent(props) {
+    useEffectOnce(() => {
+        someHeavyOperation();
+    })
 }
 ```
 
